@@ -7,6 +7,7 @@ import com.lucca.usuario.business.dto.UsuarioDTO;
 import com.lucca.usuario.infrastructure.Entity.Usuario;
 import com.lucca.usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.parser.Authorization;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -63,5 +64,16 @@ public class UsuarioController {
     public ResponseEntity<TelefoneDTO> atualizaDadosTelefone(@RequestBody TelefoneDTO telefoneDTO,
                                                              @RequestParam("id") Long id){
         return ResponseEntity.ok(usuarioService.atualizaDadosTelefone(id, telefoneDTO));
+    }
+
+    @PostMapping("/endereco")
+    public ResponseEntity<EnderecoDTO> cadastrarEndereco(@RequestBody EnderecoDTO enderecoDTO,
+                                                         @RequestHeader ("Authorization") String token){
+        return ResponseEntity.ok(usuarioService.cadastrarEndereco(token, enderecoDTO));
+    }
+    @PostMapping("/telefone")
+    public ResponseEntity<TelefoneDTO> cadastrarTelefone(@RequestBody TelefoneDTO telefoneDTO,
+                                                         @RequestHeader ("Authorization") String token){
+        return ResponseEntity.ok(usuarioService.cadastrarTelefone(token, telefoneDTO));
     }
 }
