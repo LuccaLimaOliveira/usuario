@@ -1,6 +1,8 @@
 package com.lucca.usuario.controller;
 
 import com.lucca.usuario.business.UsuarioService;
+import com.lucca.usuario.business.dto.EnderecoDTO;
+import com.lucca.usuario.business.dto.TelefoneDTO;
 import com.lucca.usuario.business.dto.UsuarioDTO;
 import com.lucca.usuario.infrastructure.Entity.Usuario;
 import com.lucca.usuario.infrastructure.security.JwtUtil;
@@ -35,7 +37,7 @@ public class UsuarioController {
     }
 
     @GetMapping
-    public ResponseEntity<Usuario> buscaUsuarioPorEmail(@RequestParam("email") String email){
+    public ResponseEntity<UsuarioDTO> buscaUsuarioPorEmail(@RequestParam("email") String email){
         return ResponseEntity.ok(usuarioService.buscarUsuarioPorEmail(email));
     }
 
@@ -51,4 +53,15 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarioService.atualizaDadosUsuario(token, dto));
     }
 
+    @PutMapping("/endereco")
+    public ResponseEntity<EnderecoDTO> atualizaDadosEndereco(@RequestBody EnderecoDTO enderecoDTO,
+                                                             @RequestParam("id") Long id){
+        return ResponseEntity.ok(usuarioService.atualizarDadosEndereco(id, enderecoDTO));
+    }
+
+    @PutMapping("/telefone")
+    public ResponseEntity<TelefoneDTO> atualizaDadosTelefone(@RequestBody TelefoneDTO telefoneDTO,
+                                                             @RequestParam("id") Long id){
+        return ResponseEntity.ok(usuarioService.atualizaDadosTelefone(id, telefoneDTO));
+    }
 }
